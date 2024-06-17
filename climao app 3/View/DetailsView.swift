@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct DetailsView: View {
+    var weather: WeatherModel
+   
+
     var body: some View {
+        
+        let visibilidade = Int(weather.visibility) / 1000
         
         VStack{
             HStack{
@@ -32,12 +37,13 @@ struct DetailsView: View {
                         .padding(25)
                         .background{
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(.ultraThinMaterial.opacity(0.2))
+                                .fill(.white.opacity(0.2))
                                 
                         }
-                    Text("Visibility\n16km")
+                    Text("Visibility \n\(visibilidade) km")
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
+                    
                 }
                 VStack{
                     Text("💨")
@@ -45,10 +51,10 @@ struct DetailsView: View {
                         .padding(25)
                         .background{
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(.ultraThinMaterial.opacity(0.2))
+                                .fill(.white.opacity(0.2))
                                 
                         }
-                    Text("Wind\n14km/h")
+                    Text("Wind\n\(weather.wind.speed.roundDuble())mph")
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
                 }
@@ -58,10 +64,10 @@ struct DetailsView: View {
                         .padding(25)
                         .background{
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(.ultraThinMaterial.opacity(0.2))
+                                .fill(.white.opacity(0.2))
                                 
                         }
-                    Text("Humidity\n80%")
+                    Text("Humidity\n\(weather.main.humidity.roundDuble())%")
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
                 }
@@ -76,5 +82,5 @@ struct DetailsView: View {
 }
 
 #Preview {
-    ContentView()
+    DetailsView(weather: previewWeather)
 }

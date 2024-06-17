@@ -31,7 +31,12 @@ struct WelcomeView: View {
                 .symbolVariant(.fill)
                 .foregroundColor(.white)
             }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color("BG").ignoresSafeArea())
             
+          
+        
         }
     }
 }

@@ -8,20 +8,57 @@
 import SwiftUI
 
 struct OutlookView: View {
-    
+    var weather: WeatherModel
     var body: some View {
+        let graus = Int(weather.main.feels_like) / 10
         VStack{
             header
             
             ZStack{
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(.ultraThinMaterial).opacity(0.3)
+                    .fill(.white).opacity(0.2)
+                
                 HStack{
-                    reading(time: "08:00", icon: "🌦️", temp: "7º")
-                    reading(time: "08:00", icon: "🌦️", temp: "7º")
-                    reading(time: "08:00", icon: "🌦️", temp: "7º")
-                    reading(time: "08:00", icon: "🌦️", temp: "7º")
-                    reading(time: "08:00", icon: "🌦️", temp: "7º")
+                    VStack(spacing:10){
+                        
+                        Image(systemName: "sun.max")
+                            .font(.system(size: 30))
+                        Text(weather.weather[0].main)
+                        
+                    }.frame(width: 100, alignment: .leading)
+                    Text("\(graus)º")
+                        .font(.system(size: 100))
+                        .fontWeight(.bold)
+                    
+                }
+                
+                .padding()
+            }
+            ZStack{
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.white).opacity(0.2)
+                HStack(spacing: 25){
+                    HStack{
+                        Text("Temp min:")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.blue)
+                        Text("\(Int(weather.main.temp_min/10))º")
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
+                        
+                    }
+                    
+                    HStack{
+                        Text("Temp max:")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.red)
+                        Text("\(Int(weather.main.temp_max/10))º")
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
+                            
+                    }
                 }
                 .padding()
             }
@@ -33,36 +70,27 @@ struct OutlookView: View {
     var header: some View{
         HStack{
             Text("Today")
-                .font(.title)
+                .font(.system(size: 50))
                 .fontWeight(.black)
+            VStack(alignment: .leading){
+                Text("in \(weather.name) ")
+                    .font(.system(size: 20))
+                Text("\(Date().formatted(.dateTime.month().day().hour().minute()))")
+                    .font(.system(size: 14))
+                    .fontWeight(.light)
+            }
             
             
             Spacer()
-            NavigationLink{
-                WeeklyView()
-            }label: {
-                HStack{
-                    Text("Next 7 Day")
-                    Image(systemName: "chevron.right")
-                }
-                .fontWeight(.semibold)
-            }
+           
         }.foregroundColor(.white)
     }
     
-    func reading(time: String, icon: String, temp: String) -> some View {
-        VStack{
-            Text(time)
-            Text(icon)
-            Text(temp)
-        }
-        .foregroundStyle(.white )
-        .padding(5)
-    }
+    
     
 }
 
 
 #Preview {
-    ContentView()
+    OutlookView(weather: previewWeather)
 }
